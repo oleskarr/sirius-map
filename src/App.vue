@@ -56,11 +56,12 @@
         </div>
 
         <div class="mt-4">
-           <PlaceCard
+         <PlaceCard
   v-if="selectedPlace"
-      :place="selectedPlace"
-      @delete-place="deleteCurrentPlace"
-    />
+  :place="selectedPlace"
+  @delete-place="deleteCurrentPlace"
+  @close="selectedPlace = null"
+/>
         </div>
       </div>
 

@@ -104,4 +104,9 @@ onBeforeUnmount(() => {
 });
 
 defineExpose({ renderMarkers });
+async function reverseGeocode(lat, lng) {
+  const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ru`);
+  const data = await res.json();
+  return data.display_name || '';
+}
 </script>

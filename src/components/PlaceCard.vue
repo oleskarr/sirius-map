@@ -24,7 +24,18 @@
     <ReviewList :reviews="reviews" />
 
     <!-- Кнопка удаления места -->
-    <div class="flex justify-end mt-4">
+      <div class="relative bg-white rounded-xl shadow p-4 mb-4 w-full">
+    <!-- Кнопка “Скрыть” -->
+    <button
+      @click="$emit('close')"
+      class=" flex justify-start top-4  bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-1 rounded-lg"
+    >
+      Скрыть
+    </button>
+    
+    <!-- ... остальное содержимое карточки ... -->
+
+    <div class="flex justify-start mt-4">
       <button
         @click="onDelete"
         class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
@@ -32,6 +43,7 @@
         Удалить место
       </button>
     </div>
+  </div>
   </div>
 </template>
 
