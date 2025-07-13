@@ -23,7 +23,8 @@
         required
         class="w-full !rounded-lg py-2 px-4 text-sm border border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
       />
-    </div>
+  
+</div>
 
     <div>
       <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Категория</label>
@@ -72,14 +73,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { savePlace } from '../utils/storage';
 
+
+const address = ref('');
+const lat = ref('');
+const lng = ref('');
 const props = defineProps(['lat', 'lng']);
 const emit = defineEmits(['place-added']);
 
 const name = ref('');
-const address = ref('');
+
 const category = ref('');
 const image = ref('');
 const preview = ref('');
@@ -103,8 +108,8 @@ function submitForm() {
     address: address.value,
     category: category.value,
     image: image.value,
-    lat: props.lat,
-    lng: props.lng
+    lat: lat.value,         // <--- обязательно!
+    lng: lng.value    
   });
 
   name.value = '';
@@ -114,5 +119,40 @@ function submitForm() {
   preview.value = '';
 
   emit('place-added');
+}
+watch([() => props.lat, () => props.lng], async ([newLat, newLng]) => {
+  if (newLat && newLng) {
+    lat.value = newLat;
+    lng.value = newLng;
+    address.value = await reverseGeocode(newLat, newLng);
+  }
+});
+
+async function reverseGeocode(lat, lng) {
+  const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ru`);
+  const data = await res.json();
+  return data.display_name || '';
+}
+async function geocodeAddress(address) {
+  const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&accept-language=ru&limit=1`);
+  const data = await res.json();
+  if (data.length > 0) {
+    return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+  } else {
+    return null;
+  }
+}
+
+async function findCoordsByAddress() {
+  if (!address.value) return;
+  const coords = await geocodeAddress(address.value);
+  if (coords) {
+    lat.value = coords.lat;
+    lng.value = coords.lng;
+    // можно эмитить на карту, чтобы обновился маркер
+    // emit('coords-updated', coords)
+  } else {
+    alert('Координаты не найдены!');
+  }
 }
 </script>
