@@ -1,4 +1,9 @@
 <template>
+  <div class="relative min-h-screen">
+  <img src="/public/карта.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-20 z-0" />
+  <div class="absolute inset-0 bg-gradient-to-br from-primary/80 via-accent/70 to-danger/90 z-10"></div>
+  <div class="relative z-20 p-6">
+ 
   <div class="p-4">
     <!-- Шапка проекта -->
     <div class="mb-6">
@@ -9,22 +14,21 @@
     </div>
 
     <!-- Навигация по основным разделам -->
-    <div class="flex justify-center gap-4 mb-6">
-      <button
-        @click="showList = true"
-        class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-      >
-        Список мест
-      </button>
-      <button
-        v-if="!showForm"
-        @click="showForm = true"
-        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-      >
-        ➕ Добавить место
-      </button>
-    </div>
-
+    <div class="flex flex-col items-start space-y-4 mb-6">
+  <button
+    @click="showList = true"
+    class="text-lg font-semibold text-white bg-dark hover:bg-danger px-8 py-4 rounded-2xl shadow-md"
+  >
+    Список мест
+  </button>
+  <button
+    v-if="!showForm"
+    @click="showForm = true"
+    class="text-lg font-semibold text-white bg-dark hover:bg-danger px-8 py-4 rounded-2xl shadow-md"
+  >
+    ➕ Добавить место
+  </button>
+</div>
     <!-- Список мест как отдельный элемент -->
     <PlacesList
       v-if="showList"
@@ -34,9 +38,9 @@
     />
 
     <!-- Основной контент: форма/карточка и карта -->
-    <div class="flex flex-col md:flex-row gap-4">
+    <div class="flex flex-col md:flex-row gap-2">
       <!-- Левая панель: форма добавления и карточка -->
-      <div class="w-full md:w-1/3">
+      <div class="w-full md:w-1/2">
         <div v-if="showForm" class="bg-white p-6 rounded-2xl shadow mb-4">
           <AddPlaceForm
             :lat="selectedLat"
@@ -62,14 +66,20 @@
 
       <!-- Правая панель: карта -->
       <div class="w-full md:w-2/3">
+         <div class="mb-4">
+        <Dropdown @filter-change="selectedCategory = $event" />
+      </div>
         <MapView
           :selectedCategory="selectedCategory"
           @map-click="updateCoords"
           @select-place="openPlaceCard"
           ref="mapRef"
         />
+        
       </div>
     </div>
+  </div>
+  </div>
   </div>
 </template>
 
@@ -81,6 +91,7 @@ import PlaceCard from './components/PlaceCard.vue';
 import PlacesList from './components/PlacesList.vue';
 import { loadPlaces, getReviewsByPlaceId } from './utils/storage';
 import { deletePlace, deleteReviewsByPlaceId } from './utils/storage';
+import Dropdown from './components/Dropdown.vue'
 
 const selectedLat = ref(null);
 const selectedLng = ref(null);

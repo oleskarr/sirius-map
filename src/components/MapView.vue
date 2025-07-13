@@ -1,5 +1,5 @@
 <template>
-  <div id="map" class="h-[600px] w-full rounded border shadow"></div>
+  <div id="map" class="h-[650px] w-full rounded-2xl border-4 border-dark shadow-2xl"></div>
 </template>
 
 <script setup>

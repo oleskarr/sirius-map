@@ -1,7 +1,7 @@
 <template>
   <form
   @submit.prevent="submitForm"
-  class="max-w-md mx-auto p-8 bg-white border border-gray-200 rounded-2xl shadow space-y-5"
+ class="max-w-2xl w-full mx-auto p-8 bg-white border border-gray-200 rounded-2xl shadow space-y-5"
 >
     <h2 class="text-xl font-bold text-gray-800 text-center">Добавить место</h2>
 
@@ -11,7 +11,7 @@
         v-model="name"
         type="text"
         required
-        class="  py-2 px-4 text-sm border rounded-lg border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+        class="w-full  py-2 px-4 text-sm border rounded-lg border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
       />
     </div>
 
@@ -21,7 +21,7 @@
         v-model="address"
         type="text"
         required
-        class="!rounded-lg py-2 px-4 text-sm border border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+        class="w-full !rounded-lg py-2 px-4 text-sm border border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
       />
     </div>
 
@@ -30,7 +30,7 @@
       <select
         v-model="category"
         required
-        class="rounded-lg py-2 px-4 text-sm border border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+        class="w-full rounded-lg py-2 px-4 text-sm border border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
       >
         <option disabled value="">Выберите категорию</option>
         <option value="музей">Музей</option>
