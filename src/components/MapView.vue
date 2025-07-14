@@ -14,7 +14,7 @@ const map = ref(null);
 const markers = ref([]);
 let resizeObserver = null;
 
-// 🔹 Иконка по умолчанию
+
 const icon = L.icon({
   iconUrl: '/marker-icon.png',
   iconSize: [32, 40],
@@ -43,7 +43,7 @@ const initMap = () => {
   zoomOffset: -1,
   }).addTo(map.value);
 
-  // Клик по карте
+ 
   map.value.on('click', (e) => {
     const { lat, lng } = e.latlng;
     emit('map-click', { lat, lng });

@@ -53,25 +53,25 @@ import ReviewForm from './ReviewForm.vue';
 import ReviewList from './ReviewList.vue';
 import { getReviewsByPlaceId } from '../utils/storage';
 
-// Определяем свойства и события
+// свойства и события
 const props = defineProps({ place: { type: Object, required: true } });
 const emit = defineEmits(['new-review', 'delete-place']);
 
-// Состояние отзывов
+
 const reviews = ref([]);
 
-// Загрузка отзывов для текущего места
+
 function loadReviewsForThis() {
   reviews.value = getReviewsByPlaceId(props.place.id);
 }
 
-// Вычисление средней оценки
+
 const averageRating = computed(() => {
   if (!reviews.value.length) return 0;
   return reviews.value.reduce((sum, r) => sum + r.rating, 0) / reviews.value.length;
 });
 
-// При монтировании и изменении place.id обновляем отзывы
+// обновляем отзывы
 onMounted(loadReviewsForThis);
 watch(() => props.place.id, loadReviewsForThis);
 

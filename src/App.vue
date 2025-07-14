@@ -5,7 +5,7 @@
   <div class="relative z-20 p-6">
  
   <div class="p-4">
-    <!-- Шапка проекта -->
+  
     <div class="mb-6">
       <h1 class="text-3xl font-bold text-center mb-2">Сириус.Путеводитель</h1>
       <p class="text-center text-gray-600 max-w-2xl mx-auto">
@@ -13,7 +13,7 @@
       </p>
     </div>
 
-    <!-- Навигация по основным разделам -->
+   
     <div class="flex flex-col items-start space-y-4 mb-6">
   <button
     @click="showList = true"
@@ -29,7 +29,7 @@
     ➕ Добавить место
   </button>
 </div>
-    <!-- Список мест как отдельный элемент -->
+  
     <PlacesList
       v-if="showList"
       :places="sortedPlaces"
@@ -37,9 +37,9 @@
       @close="showList = false"
     />
 
-    <!-- Основной контент: форма/карточка и карта -->
+ 
     <div class="flex flex-col md:flex-row gap-2">
-      <!-- Левая панель: форма добавления и карточка -->
+      <
       <div class="w-full md:w-1/2">
         <div v-if="showForm" class="bg-white p-6 rounded-2xl shadow mb-4">
           <AddPlaceForm
@@ -65,7 +65,7 @@
         </div>
       </div>
 
-      <!-- Правая панель: карта -->
+      
       <div class="w-full md:w-2/3">
          <div class="mb-4">
         <Dropdown @filter-change="selectedCategory = $event" />
@@ -131,18 +131,17 @@ const sortedPlaces = computed(() => {
     })
     .sort((a, b) => b.average - a.average);
 });
-// Удаляем место и все его отзывы
+//удаление
 function deleteCurrentPlace(placeId) {
-  // 1. Удаляем точку
+ 
   deletePlace(placeId);
-  // 2. Удаляем отзывы к ней
+  
   deleteReviewsByPlaceId(placeId);
 
-  // 3. Если это была открытая карточка — сбрасываем её
   if (selectedPlace.value?.id === placeId) {
     selectedPlace.value = null;
   }
-  // 4. Перерисовываем маркеры на карте
+
   mapRef.value?.renderMarkers();
 }
 

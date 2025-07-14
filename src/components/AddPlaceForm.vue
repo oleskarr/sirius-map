@@ -108,7 +108,7 @@ function submitForm() {
     address: address.value,
     category: category.value,
     image: image.value,
-    lat: lat.value,         // <--- обязательно!
+    lat: lat.value,        
     lng: lng.value    
   });
 
@@ -149,8 +149,7 @@ async function findCoordsByAddress() {
   if (coords) {
     lat.value = coords.lat;
     lng.value = coords.lng;
-    // можно эмитить на карту, чтобы обновился маркер
-    // emit('coords-updated', coords)
+    
   } else {
     alert('Координаты не найдены!');
   }
